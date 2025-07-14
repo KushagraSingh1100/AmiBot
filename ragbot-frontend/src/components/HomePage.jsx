@@ -87,15 +87,21 @@ function HomePage() {
                 </div>
               )
             )}
-            {loading ? <div className="flex flex-col">
-                  <p className="text-neutral-300 text-sm ml-14">AmiBot</p>
-                  <div className="flex flex-row items-end w-max h-max gap-1">
-                    <img className="rounded-full w-10" src={Bot} alt="Bot" />
-                    <div className="max-w-160 w-max h-max bg-neutral-100 p-4 py-3 rounded-lg flex items-center justify-start">
-                      <p className="w-max font-normal text-gray-700">Thinking...</p>
-                    </div>
+            {loading ? (
+              <div className="flex flex-col">
+                <p className="text-neutral-300 text-sm ml-14">AmiBot</p>
+                <div className="flex flex-row items-end w-max h-max gap-1">
+                  <img className="rounded-full w-10" src={Bot} alt="Bot" />
+                  <div className="max-w-160 w-max h-max bg-neutral-100 p-4 py-3 rounded-lg flex items-center justify-start">
+                    <p className="w-max font-normal text-gray-700">
+                      Thinking...
+                    </p>
                   </div>
-                </div> : <div></div>}
+                </div>
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
         <div className="fixed bottom-6 w-[70%] h-max flex flex-row">
@@ -117,7 +123,7 @@ function HomePage() {
                 setLoading(true);
               }}
               disabled={loading}
-              className="bg-blue-500 text-white rounded-xl px-5 h-8 cursor-pointer transition duration-200 ease-in-out hover:opacity-65"
+              className="bg-blue-600 text-white rounded-xl px-5 h-8 cursor-pointer transition duration-200 ease-in-out hover:opacity-65"
             >
               {loading ? "Sending" : "Send"}
             </button>
