@@ -2,7 +2,7 @@ import Navbar from "./Navbar";
 import "./HomePage.css";
 import Bot from "/bot.png";
 import User from "/user.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function HomePage() {
   const [convo, setConvo] = useState([]);
@@ -25,13 +25,17 @@ function HomePage() {
         loading(false);
         throw new Error(res?.detail || "Something went wrong");
       }
-      setConvo((prevItems) => [...prevItems, query, res[0].answer]);
+      setConvo((prevItems) => [...prevItems, res[0].answer]);
       setLoading(false);
       setQuery("");
     } catch (error) {
       console.error("❌ Fetch error:", error.message);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  }, [convo]);
 
   return (
     <div>
@@ -83,6 +87,15 @@ function HomePage() {
                 </div>
               )
             )}
+            {loading ? <div className="flex flex-col">
+                  <p className="text-neutral-300 text-sm ml-14">AmiBot</p>
+                  <div className="flex flex-row items-end w-max h-max gap-1">
+                    <img className="rounded-full w-10" src={Bot} alt="Bot" />
+                    <div className="max-w-160 w-max h-max bg-neutral-100 p-4 py-3 rounded-lg flex items-center justify-start">
+                      <p className="w-max font-normal text-gray-700">Thinking...</p>
+                    </div>
+                  </div>
+                </div> : <div></div>}
           </div>
         </div>
         <div className="fixed bottom-6 w-[70%] h-max flex flex-row">
@@ -100,6 +113,7 @@ function HomePage() {
             <button
               onClick={() => {
                 sendReq();
+                setConvo((prevItems) => [...prevItems, query]);
                 setLoading(true);
               }}
               disabled={loading}
