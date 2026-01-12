@@ -1,16 +1,28 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from query_data import query_rag
+from fastapi import FastAPI
+from db.__init__ import init_db
+from routes.users import router as users_router
+from routes.chats import router as chats_router
+from routes.query import router as query_router
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 
-class QueryRequest(BaseModel):
-    query: str
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-@app.post("/query")
-async def query_endpoint(request: QueryRequest):
-    try:
-        result = query_rag(request.query)
-        return result, HTTPException(status_code=200, detail="The answer was fetched successfully")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+@app.on_event("startup")
+async def startup():
+    await init_db()
+
+app.include_router(users_router)
+app.include_router(chats_router)
+app.include_router(query_router)
