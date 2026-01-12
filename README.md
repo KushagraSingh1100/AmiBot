@@ -8,33 +8,59 @@ It combines advanced language modeling with a local document knowledge base to d
 
 ## 🔍 What It Does
 
-- 📚 **Understands assignment questions**  
-- 📥 **Retrieves relevant content from internal academic documents**  
-- 💬 **Generates clear, context-aware answers**  
-- 🚀 **Available via a smooth and responsive chat interface**
+- 📚 Understands assignment questions  
+- 📥 Retrieves relevant content from internal academic documents  
+- 💬 Generates clear, context-aware answers  
+- 👤 Supports authenticated users with personalized chat sessions  
+- 🚀 Provides a smooth and responsive chat interface  
 
 ---
 
 ## 🧠 Tech Stack
 
 ### Backend
-- **LangChain** – RAG pipeline orchestration
-- **ChromaDB** – Lightweight, local vector database for document storage
-- **Ollama** – Local LLM runtime (e.g. LLaMA, Mistral, etc.)
-- **FastAPI** – API layer
+- **LangChain** – RAG pipeline orchestration  
+- **ChromaDB** – Local vector database  
+- **Ollama** – Local LLM runtime (LLaMA, Mistral, etc.)  
+- **FastAPI** – Backend API  
+- **JWT Authentication** – Secure user login  
+- **MongoDB (Beanie ODM)** – User and session persistence  
 
 ### Frontend
-- **React** – SPA architecture
-- **Tailwind CSS** – Utility-first styling
-- **Vite** – Fast dev environment
+- **React** – Single Page Application  
+- **Redux Toolkit & RTK Query** – Global state management and API handling  
+- **redux-persist** – Persisted authentication and session state  
+- **Tailwind CSS** – Utility-first styling  
+- **Vite** – Fast development environment  
 
 ---
+
+## 🧩 Key Features
+
+### 🔐 User Authentication
+- Secure **Signup & Login** using JWT tokens  
+- Token-based authorization for protected APIs  
+- Persistent authentication across browser sessions  
+
+### 🧵 Session Management
+- Each conversation runs under a **unique session ID**  
+- Sessions are tied to authenticated users  
+- Chat history is stored and retrievable  
+- Users can resume previous conversations seamlessly  
+
+### 🗂 State Management (Frontend)
+- Centralized state using **Redux Toolkit**  
+- Auth, active session, and messages managed globally  
+- API calls handled efficiently via **RTK Query**  
+- Automatic cache management and revalidation  
+
+---
+
 ## ⚙️ Setup Instructions
 
 ### 🛠 Backend
 
-1. **Install Python dependencies**
-
+1. Install Python dependencies
 ```bash
 cd ragbot-backend
 source .venv/bin/activate
